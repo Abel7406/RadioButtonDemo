@@ -8,18 +8,20 @@ public class RadioButtonDemo extends JFrame implements ActionListener {
 
     public RadioButtonDemo() {
         setTitle("RadioButtonDemo");
-        setSize(400, 400);
+        setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
+        setLayout(new BorderLayout());
 
-        // Create radio buttons
+        // Panel for radio buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(5, 1));
+
         birdButton = new JRadioButton("Bird");
         catButton = new JRadioButton("Cat");
         dogButton = new JRadioButton("Dog");
         rabbitButton = new JRadioButton("Rabbit");
         pigButton = new JRadioButton("Pig");
 
-        // Group them so only one can be selected
         ButtonGroup group = new ButtonGroup();
         group.add(birdButton);
         group.add(catButton);
@@ -27,22 +29,25 @@ public class RadioButtonDemo extends JFrame implements ActionListener {
         group.add(rabbitButton);
         group.add(pigButton);
 
-        // Add action listeners
         birdButton.addActionListener(this);
         catButton.addActionListener(this);
         dogButton.addActionListener(this);
         rabbitButton.addActionListener(this);
         pigButton.addActionListener(this);
 
-        // Add components to frame
-        add(birdButton);
-        add(catButton);
-        add(dogButton);
-        add(rabbitButton);
-        add(pigButton);
+        buttonPanel.add(birdButton);
+        buttonPanel.add(catButton);
+        buttonPanel.add(dogButton);
+        buttonPanel.add(rabbitButton);
+        buttonPanel.add(pigButton);
 
+        // Image label
         petImage = new JLabel();
-        add(petImage);
+        petImage.setHorizontalAlignment(JLabel.CENTER);
+
+        // Add panels to frame
+        add(buttonPanel, BorderLayout.WEST);
+        add(petImage, BorderLayout.CENTER);
 
         setVisible(true);
     }
@@ -50,27 +55,11 @@ public class RadioButtonDemo extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String pet = e.getActionCommand();
-        // Show message box
         JOptionPane.showMessageDialog(this, "You selected: " + pet);
 
-        // Display image (replace with your own image paths)
-        switch (pet) {
-            case "Bird":
-                petImage.setIcon(new ImageIcon("images/bird.png"));
-                break;
-            case "Cat":
-                petImage.setIcon(new ImageIcon("images/cat.png"));
-                break;
-            case "Dog":
-                petImage.setIcon(new ImageIcon("images/dog.png"));
-                break;
-            case "Rabbit":
-                petImage.setIcon(new ImageIcon("images/rabbit.png"));
-                break;
-            case "Pig":
-                petImage.setIcon(new ImageIcon("images/pig.png"));
-                break;
-        }
+        // Load image from images folder
+        String imagePath = "images/" + pet.toLowerCase() + ".jpg"; // use .jpg since your files are JPG
+        petImage.setIcon(new ImageIcon(imagePath));
     }
 
     public static void main(String[] args) {
